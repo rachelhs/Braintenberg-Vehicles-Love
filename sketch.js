@@ -157,6 +157,6 @@ function draw() {
   }
 }
 
-function windowResize() {
-  canvasResize(windowWidth, windowHeight);
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
