@@ -6,7 +6,7 @@ var histy = [];
 
 function preload() {
   img = loadImage("https://c1.staticflickr.com/1/660/31505144011_5a59015e53_o.jpg");
-  image(img, 0, 0, width, height);
+  image(img, 0, 0, windowWidth, windowHeight);
 }
 
 function Vehicle(x, y) {
