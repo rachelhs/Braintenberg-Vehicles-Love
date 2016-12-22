@@ -5,10 +5,6 @@ var histx = [];
 var histy = [];
 
 function preload() {
-  
-  //offline
-  //img = loadImage('images/FIVE.jpg');
- // online
   img = loadImage("https://c1.staticflickr.com/1/660/31505144011_5a59015e53_o.jpg");
   image(img, 0, 0, width, height);
 }
@@ -34,50 +30,6 @@ Vehicle.prototype.move = function() {
   this.y = this.y + this.speed * sin(this.angle);
 }
 
-Vehicle.prototype.senseAgression = function() {
-  
-  //pink
-  fill(220, 20, 170);
-
-  var sensor1 = brightness(get(this.x + 20 * cos(this.angle - 15), this.y + 20 * sin(this.angle - 15)));
-  var sensor2 = brightness(get(this.x + 20 * cos(this.angle + 15), this.y + 20 * sin(this.angle + 15)));
-
-  var diff = abs(sensor2 - sensor1);
-  var diff2 = map(diff, 0, 100, 1, 10);
-
-  if (sensor2 > sensor1) {
-    this.angle = this.angle + 10;
-    this.speed = diff2;
-  } else if (sensor2 < sensor1) {
-    this.angle = this.angle - 10;
-    this.speed = diff2;
-  } else {
-    this.speed = 1;
-  }
-}
-
-Vehicle.prototype.senseFear = function() {
-  
-  //blue
-  fill(30, 20, 170);
-
-  var sensor1 = brightness(get(this.x + 20 * cos(this.angle - 15), this.y + 20 * sin(this.angle - 15)));
-  var sensor2 = brightness(get(this.x + 20 * cos(this.angle + 15), this.y + 20 * sin(this.angle + 15)));
-
-  var diff = abs(sensor2 - sensor1);
-  var diff2 = map(diff, 0, 100, 1, 10);
-
-  if (sensor2 > sensor1) {
-    this.angle = this.angle - 10;
-    this.speed = diff2;
-  } else if (sensor2 < sensor1) {
-    this.angle = this.angle + 10;
-    this.speed = diff2;
-  } else {
-    this.speed = 1;
-  }
-}
-
 Vehicle.prototype.senseLove = function() {
   
   //red
@@ -96,8 +48,6 @@ Vehicle.prototype.senseLove = function() {
   else{
     newSpeed = map(sensor1, 0, 255, 1.5, 0);
   }
-  
-  console.log(newSpeed);
 
   if (sensor2 > sensor1) {
     this.angle = this.angle - 10;
@@ -128,8 +78,6 @@ Vehicle.prototype.senseLove2 = function() {
   else{
     newSpeed = map(sensor1, 0, 255, 1.5, 0);
   }
-  
-  console.log(newSpeed);
 
   if (sensor2 > sensor1) {
     this.angle = this.angle + 10;
@@ -141,8 +89,6 @@ Vehicle.prototype.senseLove2 = function() {
     this.speed = 1;
   }
 }
-
-
 
 Vehicle.prototype.randomStart = function() {
   //if they go offscreen, start again in a random position
@@ -164,7 +110,7 @@ Vehicle.prototype.middleStart = function() {
 function setup() {
 
   angleMode(DEGREES);
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
 
   for (var i = 0; i < 12; i++) {
     vehicles.push(new Vehicle(100 - i, 100 + i));
@@ -204,7 +150,13 @@ function draw() {
       ellipse(histx[i][j], histy[i][j], 2, 2);
     }
   }
+  
+  //Switch between starting modes
   if (keyIsPressed) {
     change = change * (-1);
   }
+}
+
+function windowResize() {
+  canvasResize(windowWidth, windowHeight);
 }
